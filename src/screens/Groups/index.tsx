@@ -1,5 +1,9 @@
-import { View } from 'react-native';
+import { Container, Title } from "./styles"
 
 export const Groups: React.FC = () => {
-  return <View />;
+  return (
+    <Container>
+      <Title>Group</Title>
+    </Container>
+  )
 }
