@@ -7,8 +7,8 @@
       "@assets/*": [
         "./src/assets/*"
       ],
-      "@component/*": [
-        "./src/component/*"
+      "@components/*": [
+        "./src/components/*"
       ],
       "@routes/*": [
         "./src/routes/*"
