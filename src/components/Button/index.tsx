@@ -5,7 +5,7 @@ import { ButtonTypeStyleProps, Container, Title } from './styles';
 
 type Props = TouchableOpacityProps & {
   title: string;
-  type: ButtonTypeStyleProps;
+  type?: ButtonTypeStyleProps;
 };
 
 const Button: React.FC<Props> = ({ title, type = 'PRIMARY', ...rest }) => {
