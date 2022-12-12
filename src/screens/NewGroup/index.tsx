@@ -1,5 +1,6 @@
 import { Button } from '@components/Button';
 import { Highlight } from '@components/Highlight';
+import Input from '@components/Input';
 import React from 'react';
 
 import { Container, Content, Icon } from './styles';
@@ -13,7 +14,8 @@ const NewGroup: React.FC = () => {
           title="Nova turma"
           subtitle="crie a turma para adicionar pessoas"
         />
-        <Button title="Criar" />
+        <Input />
+        <Button title="Criar" style={{ marginTop: 20 }} />
       </Content>
     </Container>
   );
