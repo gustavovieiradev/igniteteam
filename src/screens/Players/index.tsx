@@ -3,6 +3,7 @@ import { Filter } from '@components/Filter';
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
 import Input from '@components/Input';
+import { PlayCard } from '@components/PlayCard';
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 
@@ -38,6 +39,12 @@ const Players: React.FC = () => {
         />
         <NumberOfPlayers>{players.length}</NumberOfPlayers>
       </HeaderList>
+
+      <FlatList
+        data={players}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => <PlayCard name={item} onRemove={() => {}} />}
+      />
     </Container>
   );
 };
