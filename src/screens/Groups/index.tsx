@@ -4,6 +4,8 @@ import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
 import { ListEmpty } from '@components/ListEmpty';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 import { useState } from 'react';
 import { FlatList } from 'react-native';
 import { Container } from './styles';
@@ -13,7 +15,7 @@ export const Groups: React.FC = () => {
   const navigation = useNavigation();
 
   function handleNewGroup() {
-    navigation.navigate('groups');
+    navigation.navigate('new');
   }
 
   return (
