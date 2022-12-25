@@ -6,10 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 
 import { Container, Content, Icon } from './styles';
-const navigation = useNavigation();
 
 const NewGroup: React.FC = () => {
   const [group, setGroup] = useState('');
+  const navigation = useNavigation();
 
   function handleNew() {
     navigation.navigate('players', { group });
