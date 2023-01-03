@@ -13,7 +13,7 @@ const Header: React.FC<Props> = ({ showBackButton }) => {
   const navigation = useNavigation();
 
   function handleGoBack() {
-    navigation.goBack();
+    navigation.navigate('groups');
   }
 
   return (

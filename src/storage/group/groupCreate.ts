@@ -5,6 +5,10 @@ import { groupGetAll } from './groupGetAll';
 
 export async function groupCreate(newGroup: string) {
   try {
+    if (newGroup.length === 0) {
+      throw new AppError('Informe o nome da turma');
+    }
+
     const storageGroups = await groupGetAll();
 
     const groupAlreadyExists = storageGroups.includes(newGroup);
