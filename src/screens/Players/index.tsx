@@ -9,8 +9,8 @@ import { PlayCard } from '@components/PlayCard';
 import { playerAddByGroup } from '@storage/player/playerAddByGroup';
 import { useRoute } from '@react-navigation/native';
 import { AppError } from '@utils/AppError';
-import React, { useEffect, useState } from 'react';
-import { Alert, FlatList } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, FlatList, TextInput } from 'react-native';
 
 import { Container, Form, HeaderList, NumberOfPlayers } from './styles';
 import { playersGetByGroupAndTeam } from '@storage/player/playersGetByGroupAndTeam';
@@ -24,6 +24,8 @@ const Players: React.FC = () => {
   const [newPlayerName, setNewPlayerName] = useState('');
   const [team, setTeam] = useState('Time A');
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
+
+  const newPlayerNameInputRef = useRef<TextInput>(null);
 
   const route = useRoute();
   const { group } = route.params as RouteParams;
@@ -40,6 +42,10 @@ const Players: React.FC = () => {
       };
 
       await playerAddByGroup(newPlayer, group);
+
+      newPlayerNameInputRef.current?.blur();
+
+      setNewPlayerName('');
       await fetchPlayersByTeam();
     } catch (err) {
       if (err instanceof AppError) {
@@ -76,9 +82,13 @@ const Players: React.FC = () => {
       <Highlight title={group} subtitle="adicione a galera e separe os times" />
       <Form>
         <Input
+          inputRef={newPlayerNameInputRef}
           placeholder="Nome da pessoa"
           autoCorrect={false}
           onChangeText={setNewPlayerName}
+          value={newPlayerName}
+          onSubmitEditing={handleAddPlayer}
+          returnKeyType="done"
         />
         <ButtonIcon icon="add" onPress={handleAddPlayer} />
       </Form>
