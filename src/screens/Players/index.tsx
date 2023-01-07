@@ -15,6 +15,7 @@ import { Alert, FlatList, TextInput } from 'react-native';
 import { Container, Form, HeaderList, NumberOfPlayers } from './styles';
 import { playersGetByGroupAndTeam } from '@storage/player/playersGetByGroupAndTeam';
 import { PlayerStorageDTO } from '@storage/player/PlayerStorageDTO';
+import { playerRemoveByGroup } from '@storage/player/playerRemoveByGroup';
 
 type RouteParams = {
   group: string;
@@ -76,6 +77,16 @@ const Players: React.FC = () => {
     }
   }
 
+  async function handlePlayerRemove(playerName: string) {
+    try {
+      await playerRemoveByGroup(playerName, group);
+      await fetchPlayersByTeam();
+    } catch (err) {
+      console.log(err);
+      Alert.alert('Remover pessoa', 'Não foi possível remover essa pessoa');
+    }
+  }
+
   return (
     <Container>
       <Header showBackButton />
@@ -113,7 +124,10 @@ const Players: React.FC = () => {
         data={players}
         keyExtractor={(item) => item.name}
         renderItem={({ item }) => (
-          <PlayCard name={item.name} onRemove={() => {}} />
+          <PlayCard
+            name={item.name}
+            onRemove={() => handlePlayerRemove(item.name)}
+          />
         )}
         ListEmptyComponent={() => (
           <ListEmpty message="Não há pessoas nesse time" />
