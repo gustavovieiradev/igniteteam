@@ -9,7 +9,7 @@ export async function playerRemoveByGroup(playerName: string, group: string) {
 
     const players = JSON.stringify(filtered);
 
-    await AsyncStorage.setItem(`${PLAYER_COLLECTION}-group`, players);
+    await AsyncStorage.setItem(`${PLAYER_COLLECTION}-${group}`, players);
   } catch (err) {
     throw err;
   }

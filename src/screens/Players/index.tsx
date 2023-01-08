@@ -7,7 +7,7 @@ import Input from '@components/Input';
 import { ListEmpty } from '@components/ListEmpty';
 import { PlayCard } from '@components/PlayCard';
 import { playerAddByGroup } from '@storage/player/playerAddByGroup';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { AppError } from '@utils/AppError';
 import React, { useEffect, useRef, useState } from 'react';
 import { Alert, FlatList, TextInput } from 'react-native';
@@ -16,6 +16,7 @@ import { Container, Form, HeaderList, NumberOfPlayers } from './styles';
 import { playersGetByGroupAndTeam } from '@storage/player/playersGetByGroupAndTeam';
 import { PlayerStorageDTO } from '@storage/player/PlayerStorageDTO';
 import { playerRemoveByGroup } from '@storage/player/playerRemoveByGroup';
+import { groupRemoveByName } from '@storage/group/groupRemoveByName';
 
 type RouteParams = {
   group: string;
@@ -28,6 +29,7 @@ const Players: React.FC = () => {
 
   const newPlayerNameInputRef = useRef<TextInput>(null);
 
+  const navigation = useNavigation();
   const route = useRoute();
   const { group } = route.params as RouteParams;
 
@@ -79,12 +81,30 @@ const Players: React.FC = () => {
 
   async function handlePlayerRemove(playerName: string) {
     try {
+      console.log(playerName);
       await playerRemoveByGroup(playerName, group);
       await fetchPlayersByTeam();
     } catch (err) {
       console.log(err);
       Alert.alert('Remover pessoa', 'Não foi possível remover essa pessoa');
     }
+  }
+
+  async function groupRemove() {
+    try {
+      await groupRemoveByName(group);
+      navigation.navigate('groups');
+    } catch (err) {
+      console.log(err);
+      Alert.alert('Remover grupo', 'Não foi possível remover o grupo');
+    }
+  }
+
+  async function handleGroupRemove() {
+    Alert.alert('Remover', 'Deseja remover o grupo?', [
+      { text: 'Não', style: 'cancel' },
+      { text: 'Sim', onPress: () => groupRemove() },
+    ]);
   }
 
   return (
@@ -138,7 +158,11 @@ const Players: React.FC = () => {
           players.length === 0 && { flex: 1 },
         ]}
       />
-      <Button title="Remove turma" type="SECONDARY" />
+      <Button
+        title="Remove turma"
+        type="SECONDARY"
+        onPress={handleGroupRemove}
+      />
     </Container>
   );
 };
